@@ -1,9 +1,8 @@
-var express = require('express');
-var app = express.createServer(express.logger());
+var http = require('http');
 var fs = require('fs');
-app.use(express.static("."));
-app.use(express.static("includes"));
 var port = process.env.PORT || 8080;
-app.listen(port, function() {
-  console.log("Listening on " + port);
+var server = http.createServer(function(request, response) {
+  response.writeHead(200, {"Content-type": "text/html"});
+  response.end(fs.readFileSync("."+request.url));
 });
+server.listen(port);
